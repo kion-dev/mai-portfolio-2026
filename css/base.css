@@ -1,0 +1,248 @@
+/* =========================================================
+   Folio — shared base styles
+   Every portfolio page links this file. It sets up:
+   - design tokens (colours, type, layout width)
+   - the paper background (native size, tiles seamlessly)
+   - the fixed navigation bar
+   - the footer, pinned to the bottom of the page
+   ========================================================= */
+
+:root {
+  /* colours */
+  --text: #222c1d;
+  --bg: #f9faf5;
+  --shadow: #ebeae6;
+  --green: #1f4d0a;
+  --palm: #acd160;
+
+  /* type */
+  --font-display: "Gaegu", cursive;
+  --font-body: "Nunito", system-ui, sans-serif;
+
+  /* layout */
+  --content: 1280px;
+  --gutter: 16px;
+  --nav-h: 65px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+img { display: block; max-width: none; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+html {
+  /* Paper texture: 2880×7500 tile built from the Figma "bg" render, mirrored
+     on both axes so it repeats with no seams. It is never scaled — it stays
+     at its native size and keeps going for the whole length of the page.
+     The un-mirrored quadrant is centred, matching the 1440 frame in Figma. */
+  background-color: #eeede9;
+  background-image: url("../assets/paper.webp");
+  background-repeat: repeat;
+  background-size: 2880px 7500px;
+  background-position: calc(50% + 720px) 0;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The page's own content grows so the footer always sits at the bottom,
+   even on short pages. */
+.site-main { flex: 1 0 auto; width: 100%; }
+
+/* Centred 1280 content column for page sections */
+.container {
+  width: 100%;
+  max-width: var(--content);
+  margin: 0 auto;
+}
+@media (max-width: 1311px) {
+  .container { padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+
+/* Optional: add to <main> on pages whose first section doesn't already
+   leave room for the fixed nav. */
+.site-main--offset { padding-top: var(--nav-h); }
+
+/* ---------------------------------------------------------
+   Link with hand-drawn underline (nav_item)
+   The underline sits off to the left, clipped, and slides in on hover —
+   as laid out in Figma (divider parked off-left inside the clipped item).
+   --------------------------------------------------------- */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 22px;
+  padding: 0 4px;
+  overflow: hidden;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.nav-item::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  transform: translateX(calc(-100% - 8px));
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.35s cubic-bezier(.3,.7,.2,1);
+}
+.nav-item:hover::after,
+.nav-item:focus-visible::after,
+.nav-item[aria-current="page"]::after { transform: translateX(0); }
+.nav-item:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+/* ---------------------------------------------------------
+   Navigation (section_navigation) — fixed to the top
+   --------------------------------------------------------- */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+  background: rgba(235, 234, 230, 0.15);
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+  border-radius: 0 0 18px 18px;
+}
+.site-nav__inner {
+  width: 100%;
+  max-width: var(--content);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+.site-nav__logo { width: 24px; height: 23px; object-fit: contain; }
+.site-nav__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 12px;
+}
+.site-nav__links li {
+  width: 62px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------
+   Footer (section_footer) — always at the bottom
+   --------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  overflow: hidden;
+}
+/* Artwork is 1440 wide in Figma. Narrower screens crop it from the centre
+   (as the Figma frame does); wider screens scale it up to fill. */
+.site-footer__art {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(1440px, 100%);
+  padding-top: calc(51 / 1440 * max(1440px, 100vw));
+}
+.site-footer__paper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.site-footer__landscape {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.site-footer__text {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 100%;
+  max-width: var(--content);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 48px 0;
+}
+.site-footer__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 48px;
+  white-space: nowrap;
+  padding-bottom: 8px;
+}
+.site-footer__links { display: flex; gap: 36px; align-items: flex-start; }
+.site-footer__col {
+  width: 102px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.site-footer__heading {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--green);
+  white-space: nowrap;
+}
+.site-footer__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+@media (max-width: 1311px) {
+  .site-footer__text { padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+@media (max-width: 900px) {
+  .site-nav__links { gap: 8px; }
+  .site-nav__links li { width: auto; }
+  .site-footer__text { flex-direction: column; gap: 24px; padding-top: 32px; }
+  .site-footer__title { white-space: normal; font-size: 40px; }
+  .site-footer__art { padding-top: 260px; }
+}
+@media (max-width: 600px) {
+  .site-nav { padding: 8px; }
+  .site-nav__brand, .site-nav__links { padding: 8px 4px; }
+  .site-nav__name { display: none; }
+  .site-footer__title { font-size: 34px; }
+  .site-footer__art { padding-top: 300px; }
+}

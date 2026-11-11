@@ -1,0 +1,204 @@
+/* =========================================================
+   Case study page (case_study)
+   Layout from Figma: a 1280 column with the hero on top, then an
+   880-wide reading column (200px in from each side) with the
+   back button + section list in the left margin.
+   ========================================================= */
+
+:root {
+  --bright-green: #3e7d1e;
+  --cs-side: 200px;          /* left/right margin around the reading column */
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* content_case_study */
+.cs { padding: 100px 0; }
+
+/* ---------- main_solution_display (hero) ---------- */
+.cs-hero {
+  width: 100%;
+  height: 605px;
+  background: var(--palm);
+  overflow: hidden;
+}
+.cs-hero img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- body: sidebar + sections ---------- */
+.cs-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 64px var(--cs-side);
+}
+
+/* case_verticalnav — sits in the left margin and stays in view while scrolling */
+.cs-aside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--cs-side);
+  padding: 124px 0;
+}
+.cs-aside__inner {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* button_back_home */
+.cs-back {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 240px;
+  padding: 4px 8px 4px 4px;
+  background: var(--palm);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.cs-back img { width: 20px; height: 20px; flex-shrink: 0; }
+/* Hand-drawn underline parked off-left, slides in on hover (as in Figma) */
+.cs-back::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transform: translateX(calc(-100% - 8px));
+  transition: transform 0.35s cubic-bezier(.3,.7,.2,1);
+}
+.cs-back:hover::after,
+.cs-back:focus-visible::after { transform: translateX(0); }
+.cs-back:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+/* nav_case_study — built from the sections in content.js */
+.cs-toc {
+  padding: 12px 16px 12px 0;
+  border-radius: 0 0 18px 18px;
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+}
+.cs-toc ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.cs-toc .nav-item[aria-current="true"]::after { transform: translateX(0); }
+
+/* ---------- sections ---------- */
+.cs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1080px;
+  width: 100%;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--green);
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+.cs-section--bright { border-bottom-color: var(--bright-green); }
+
+/* section_overview */
+.cs-overview {
+  gap: 24px;
+  padding-bottom: 32px;
+  border-bottom-color: var(--palm);
+}
+.cs-overview__titles { display: flex; flex-direction: column; gap: 10px; }
+.cs-title { font-size: 32px; font-weight: 600; }
+.cs-lede { font-size: 16px; }
+
+/* description_project (Timeline / Status / Team) */
+.cs-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 0;
+  padding-bottom: 16px;
+}
+.cs-meta__item { display: flex; flex-direction: column; gap: 10px; width: 200px; }
+.cs-meta dt { font-size: 24px; font-weight: 500; }
+.cs-meta dd { font-size: 16px; }
+
+/* Section heading (subhead: "The problem", "Solution"…) */
+.cs-section__heading {
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 16px;
+}
+
+/* A block: optional title + text */
+.cs-block { display: flex; flex-direction: column; gap: 10px; }
+.cs-block__title { font-size: 24px; font-weight: 500; padding-bottom: 8px; }
+.cs-block__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  padding-bottom: 8px;
+}
+.cs-block__text ul,
+.cs-block__text ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.cs-block__text ul { list-style: disc; }
+.cs-block__text ol { list-style: decimal; }
+.cs-block__text a { text-decoration: underline; text-underline-offset: 3px; }
+.cs-block__text a:hover { color: var(--green); }
+
+/* Image (img_intro / solution image) */
+.cs-figure { display: flex; flex-direction: column; }
+.cs-media {
+  width: 100%;
+  background: var(--bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cs-media img,
+.cs-media video { display: block; width: 100%; height: auto; }
+.cs-media--placeholder { height: 529px; }
+.cs-caption {
+  padding: 4px 0 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Two or three images side by side */
+.cs-gallery { display: grid; grid-template-columns: repeat(var(--cols, 2), 1fr); gap: 16px; }
+
+/* Message shown when a case study can't be found */
+.cs-missing { padding: 200px 0 120px; text-align: center; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.cs-missing h1 { font-family: var(--font-display); font-size: 48px; font-weight: 700; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  :root { --cs-side: 120px; }
+}
+@media (max-width: 960px) {
+  .cs-hero { height: auto; aspect-ratio: 1280 / 605; }
+  .cs-body { padding: 32px 0 48px; max-width: 880px; margin: 0 auto; }
+  .cs-aside { position: static; width: auto; padding: 0; }
+  .cs-toc { display: none; }
+}
+@media (max-width: 600px) {
+  .cs { padding: 88px 0 64px; }
+  .cs-title { font-size: 28px; }
+  .cs-meta { flex-direction: column; }
+  .cs-meta__item { width: auto; }
+  .cs-media--placeholder { height: 280px; }
+  .cs-gallery { grid-template-columns: 1fr; }
+}
