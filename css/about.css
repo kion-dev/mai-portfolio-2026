@@ -1,0 +1,384 @@
+/* =========================================================
+   About page (Figma: 121:152)
+   Intro + design philosophy + experiences, then the stamp
+   playground: paper on the left, stamp kit on the right.
+   ========================================================= */
+
+:root { --bright-green: #3e7d1e; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* content_about_sections — Figma puts the footer at y=2256 */
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+  padding: 200px 0 100px;
+  min-height: 2256px;
+}
+
+/* ---------- button_back_home ---------- */
+.back-home {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 240px;
+  padding: 4px 8px 4px 4px;
+  background: var(--palm);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.back-home img { width: 20px; height: 20px; flex-shrink: 0; }
+.back-home span { width: 98px; }
+/* underline parked off-left, slides in on hover (as in Figma) */
+.back-home::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transform: translateX(calc(-100% - 8px));
+  transition: transform 0.35s cubic-bezier(.3,.7,.2,1);
+}
+.back-home:hover::after,
+.back-home:focus-visible::after { transform: translateX(0); }
+.back-home:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+/* ---------- section_intro ---------- */
+.about-intro { width: 756px; max-width: 100%; display: flex; flex-direction: column; }
+.about-intro__subhead { font-size: 24px; font-weight: 500; padding-bottom: 8px; }
+.about-intro__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  padding-bottom: 8px;
+}
+.about-intro__desc { font-size: 16px; padding-bottom: 16px; }
+
+/* ---------- shared section label (SubHead 2) ---------- */
+.about-section { width: 756px; max-width: 100%; display: flex; flex-direction: column; }
+.about-section__label {
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 8px;
+  white-space: nowrap;
+}
+
+/* ---------- section_design_philosophy ---------- */
+.about-philosophy__title { font-size: 36px; font-weight: 700; padding-bottom: 16px; }
+.about-philosophy__desc {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 16px;
+  font-size: 16px;
+}
+
+/* ---------- section_experience_communities ---------- */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px 0;
+  font-size: 16px;
+}
+.exp {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--bright-green);
+}
+.exp__org { font-weight: 700; }
+.exp__role { opacity: 0.5; text-align: right; }
+
+/* ---------- section_message ---------- */
+.about-message { width: 100%; display: flex; flex-direction: column; padding-top: 32px; }
+
+.stamp-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  height: 810px;
+  padding-top: 32px;   /* Figma also has 48px right padding, but the kit runs past it to the column edge */
+}
+.stamp-area.is-holding,
+.stamp-area.is-holding button,
+.stamp-area.is-holding .paper__draw { cursor: none; }
+
+/* paper — the stack image is the Figma render of the three sheets;
+   overlays below use the Figma frame's coordinates */
+.paper-wrap { flex-shrink: 0; width: 523px; height: 709px; }
+.paper {
+  position: relative;
+  width: 523px;
+  height: 709px;
+  transform-origin: top left;
+}
+.paper__stack {
+  position: absolute;
+  left: -0.8px;
+  top: -15.7px;
+  width: 546px;
+  height: 746px;
+  pointer-events: none;
+  user-select: none;
+}
+.paper.is-swapping .paper__stack,
+.paper.is-swapping .paper__draw,
+.paper.is-swapping .paper__write { animation: sheet-swap 0.6s ease; }
+@keyframes sheet-swap {
+  0%   { transform: translateX(0) rotate(0); opacity: 1; }
+  45%  { transform: translateX(-40px) rotate(-3deg); opacity: 0; }
+  55%  { transform: translateX(30px) rotate(2deg); opacity: 0; }
+  100% { transform: translateX(0) rotate(0); opacity: 1; }
+}
+
+/* draw_stamp */
+.paper__draw {
+  position: absolute;
+  left: 21.65px;
+  top: 20.59px;
+  width: 463.06px;
+  height: 447.35px;
+  background: rgba(235, 234, 230, 0.15);
+  transform: rotate(-1deg);
+  overflow: hidden;
+  outline: none;
+}
+.paper__draw:focus-visible { box-shadow: inset 0 0 0 2px var(--bright-green); }
+.paper__postage {
+  position: absolute;
+  left: 359px;
+  top: 1.79px;
+  width: 100px;
+  height: 143px;
+  transform: rotate(-1deg);
+  pointer-events: none;
+  user-select: none;
+}
+.paper__postage.is-new { animation: postage-in 0.35s cubic-bezier(.3,1.4,.5,1); }
+@keyframes postage-in {
+  from { transform: rotate(-1deg) scale(1.25); opacity: 0; }
+  to   { transform: rotate(-1deg) scale(1); opacity: 1; }
+}
+.paper__marks { position: absolute; inset: 0; pointer-events: none; }
+.mark {
+  position: absolute;
+  background: var(--bright-green);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  animation: mark-in 0.18s ease-out;
+}
+.mark.is-washing { transition: opacity 0.45s ease; opacity: 0 !important; }
+@keyframes mark-in { from { transform: var(--rot) scale(1.12); opacity: 0; } }
+
+/* write */
+.paper__write {
+  position: absolute;
+  left: 19.62px;
+  top: 477.06px;
+  width: 479px;
+  height: 215.2px;
+  transform: rotate(-1deg);
+  overflow: hidden;
+}
+.paper__write textarea {
+  width: 100%;
+  height: 100%;
+  padding: 14.91px 16px 12px 2.89px;
+  border: 0;
+  background: transparent;
+  resize: none;
+  outline: none;
+  color: var(--text);
+  font: 400 20px/normal var(--font-body);
+}
+.paper__write textarea::placeholder { color: var(--text); opacity: 0.5; }
+.paper__write:focus-within { box-shadow: inset 0 -2px 0 rgba(62, 125, 30, 0.35); }
+
+/* ---------- stamp kit ---------- */
+.kit {
+  flex-shrink: 0;
+  width: 709px;
+  height: 697px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.kit button {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.kit button:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 4px; }
+
+/* choice_stamp — postage stamps; the chosen one is larger and tilted */
+.postage { display: flex; align-items: center; gap: 24px; }
+.postage__btn {
+  position: relative;
+  width: 100px;
+  height: 143px;
+  flex-shrink: 0;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+.postage__btn img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  height: 143px;
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+.postage__btn:not(.is-selected):hover img { transform: translate(-50%, -50%) translateY(-4px) rotate(-1deg); }
+.postage__btn.is-selected { width: 125.9px; height: 175.08px; }
+.postage__btn.is-selected img {
+  width: 120px;
+  height: 171px;
+  transform: translate(-50%, -50%) rotate(2deg);
+}
+
+/* stamps — wooden blocks (image includes the drop shadow) */
+.blocks { width: 684px; display: flex; align-items: flex-start; justify-content: space-between; }
+.block {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.block img { position: absolute; left: 0; top: 0; width: 134px; height: 143px; pointer-events: none; }
+.block:hover { transform: translateY(-4px); }
+.block[aria-pressed="true"] { opacity: 0.3; transform: none; }
+@media (hover: none) {
+  .block[aria-pressed="true"] { opacity: 1; transform: translateY(-8px) rotate(-4deg); }
+}
+
+/* choice_stamp — label + ink pad */
+.ink-row { display: flex; align-items: center; gap: 12px; }
+.ink-row__label {
+  width: 250px;
+  font-size: 20px;
+  color: #000;
+  white-space: nowrap;
+}
+.ink {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  flex-shrink: 0;
+}
+/* Figma's 8px border sits outside the 124 box, so the render starts 9/8px out */
+.ink img { position: absolute; left: -9px; top: -8px; width: 148px; height: 149px; pointer-events: none; }
+.ink.is-dabbing { animation: dab 0.3s ease; }
+@keyframes dab { 50% { transform: scale(0.96); } }
+
+/* toolbar_stamp_actions */
+.toolbar { display: flex; align-items: flex-start; gap: 48px; }
+.toolbar__slot { width: 152px; display: flex; justify-content: center; }
+.toolbar__slot--undo { padding: 0 16px; }
+.tool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 200px;
+  height: 33px;
+  white-space: nowrap;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.tool .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+}
+.tool:hover { transform: translateY(-2px); }
+.tool:disabled { opacity: 0.35; cursor: default; transform: none; }
+
+/* block that follows the pointer while it's picked up */
+.ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  width: 124px;
+  height: 124px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  will-change: transform;
+}
+.ghost img { width: 134px; height: 143px; transform: rotate(-6deg); transition: transform 0.12s ease, filter 0.2s ease; }
+.ghost.is-visible { opacity: 1; }
+.ghost.is-inked img { filter: drop-shadow(0 6px 0 rgba(62, 125, 30, 0.55)); }
+.ghost.is-pressing img { transform: rotate(0deg) scale(0.92); }
+.ghost.is-shaking img { animation: shake 0.35s ease; }
+@keyframes shake {
+  25% { transform: rotate(-12deg); }
+  50% { transform: rotate(2deg); }
+  75% { transform: rotate(-9deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper.is-swapping *, .mark, .ghost img, .postage__btn img { animation: none !important; transition: none !important; }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1311px) {
+  .stamp-area { height: auto; flex-wrap: wrap; padding-right: 0; row-gap: 56px; }
+}
+@media (max-width: 900px) {
+  .about { min-height: 0; padding-top: 120px; }
+  .about-intro__title { font-size: 40px; }
+  .kit { width: 100%; height: auto; gap: 40px; }
+  .postage, .blocks { flex-wrap: wrap; gap: 24px; width: 100%; justify-content: flex-start; }
+  .toolbar { flex-wrap: wrap; gap: 16px 24px; }
+  .toolbar__slot, .toolbar__slot--undo { width: auto; padding: 0; }
+}
+@media (max-width: 600px) {
+  .about-intro__title { font-size: 34px; }
+  .about-philosophy__title { font-size: 28px; }
+  .about-section__label { white-space: normal; }
+  .exp { flex-direction: column; gap: 2px; }
+  .exp__role { text-align: left; }
+  .ink-row__label { width: auto; flex: 1; white-space: normal; }
+  .blocks .block { width: 96px; height: 96px; }
+  .blocks .block img { width: 104px; height: 111px; }
+}

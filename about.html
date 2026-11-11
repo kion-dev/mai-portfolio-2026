@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Mai Nguyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=draft,mop,redo&display=block" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<header id="site-nav"></header>
+
+<!-- About page (Figma: 121:152). Stamp playground logic: js/about.js -->
+<main class="site-main">
+  <div class="container">
+    <div class="about">
+
+      <a class="back-home" href="index.html">
+        <img src="assets/arrow-back.svg" alt="" width="20" height="20">
+        <span>Back to home</span>
+      </a>
+
+      <!-- section_intro -->
+      <section class="about-intro">
+        <p class="about-intro__subhead">Hey there, I’m Mai!</p>
+        <h1 class="about-intro__title">I design personalized experiences, make bomb coffee and collect lots of sentimental merch.</h1>
+        <p class="about-intro__desc">Based in Waterloo, ON. I’ve always been drawn to complex concepts and translating it in a way that makes the most sense through visuals! (duh)</p>
+      </section>
+
+      <!-- section_design_philosophy -->
+      <section class="about-section">
+        <h2 class="about-section__label">My 2 cents on Design</h2>
+        <h3 class="about-philosophy__title">Designs should be thoughtful!</h3>
+        <div class="about-philosophy__desc">
+          <p>I’m a designer who believes in thoughtful designs, deep understanding of the problem and the people you’re solving things for.</p>
+          <p>Everything from the systems, to the user flow, to the front-end: I aim to build experiences that feels thoughtful and actually creates impact.</p>
+          <p>Outside of work, you can find me touring my city and finding more cafes to study in, running around or creating mixed-media art pieces.</p>
+        </div>
+      </section>
+
+      <!-- section_experience_communities -->
+      <section class="about-section">
+        <h2 class="about-section__label">Experiences + Communities</h2>
+        <ul class="exp-list">
+          <li class="exp"><span class="exp__org">CredLaunch</span><span class="exp__role">Lead Product Design</span></li>
+          <li class="exp"><span class="exp__org">Digital Extremes</span><span class="exp__role">Merchandise Coordinator</span></li>
+          <li class="exp"><span class="exp__org">DesignAtWaterloo</span><span class="exp__role">Design Member</span></li>
+          <li class="exp"><span class="exp__org">TechNova</span><span class="exp__role">Design Lead</span></li>
+          <li class="exp"><span class="exp__org">W Store Print + Retail Services</span><span class="exp__role">Marketing Staff + Graphic Design</span></li>
+        </ul>
+      </section>
+
+      <!-- section_message: stamp playground -->
+      <section class="about-message" aria-labelledby="message-title">
+        <h2 class="about-section__label" id="message-title">Want to leave me a message?</h2>
+
+        <div class="stamp-area" id="playground">
+
+          <!-- paper -->
+          <div class="paper-wrap">
+            <div class="paper" id="paper">
+              <img class="paper__stack" src="assets/about/paper-stack.png" alt="" width="546" height="746">
+              <div class="paper__draw" id="paper-draw" tabindex="0" role="button"
+                   aria-label="Paper. Pick up an inked block, then click here to stamp. Enter stamps at a random spot.">
+                <img class="paper__postage" id="paper-postage" src="assets/about/stamp-dandelion.png" alt="Dandelion postage stamp" width="100" height="143">
+                <div class="paper__marks" id="marks"></div>
+              </div>
+              <div class="paper__write">
+                <label class="visually-hidden" for="message">Your message</label>
+                <textarea id="message" placeholder="WRITE ME A MESSAGE..." maxlength="600" spellcheck="true"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- stamp kit -->
+          <div class="kit">
+            <div class="postage" role="radiogroup" aria-label="Choose a postage stamp">
+              <button class="postage__btn is-selected" role="radio" aria-checked="true" data-stamp="dandelion" aria-label="Dandelion">
+                <img src="assets/about/stamp-dandelion.png" alt="" width="120" height="171">
+              </button>
+              <button class="postage__btn" role="radio" aria-checked="false" data-stamp="mai" aria-label="Mai shrub">
+                <img src="assets/about/stamp-mai.png" alt="" width="100" height="143">
+              </button>
+              <button class="postage__btn" role="radio" aria-checked="false" data-stamp="sunflower" aria-label="Sunflower">
+                <img src="assets/about/stamp-sunflower.png" alt="" width="100" height="142">
+              </button>
+              <button class="postage__btn" role="radio" aria-checked="false" data-stamp="tulip" aria-label="Tulips">
+                <img src="assets/about/stamp-tulip.png" alt="" width="100" height="142">
+              </button>
+            </div>
+
+            <div class="blocks" aria-label="Stamp blocks">
+              <button class="block" data-block="1" aria-pressed="false" aria-label="Sun block"><img src="assets/about/block-1.png" alt="" width="134" height="143"></button>
+              <button class="block" data-block="2" aria-pressed="false" aria-label="Leaf block"><img src="assets/about/block-2.png" alt="" width="134" height="143"></button>
+              <button class="block" data-block="3" aria-pressed="false" aria-label="Flower block"><img src="assets/about/block-3.png" alt="" width="134" height="143"></button>
+              <button class="block" data-block="4" aria-pressed="false" aria-label="Sparkle block"><img src="assets/about/block-4.png" alt="" width="134" height="143"></button>
+            </div>
+
+            <div class="ink-row">
+              <p class="ink-row__label" id="stamp-hint" aria-live="polite">Pick up a block</p>
+              <button class="ink" id="ink" aria-label="Ink pad"><img src="assets/about/ink-pad.png" alt="" width="148" height="149"></button>
+            </div>
+
+            <div class="toolbar">
+              <div class="toolbar__slot toolbar__slot--undo">
+                <button class="tool" id="undo"><span class="material-symbols-outlined" aria-hidden="true">redo</span><span>Undo</span></button>
+              </div>
+              <div class="toolbar__slot">
+                <button class="tool" id="wash"><span class="material-symbols-outlined" aria-hidden="true">mop</span><span>Wash Off</span></button>
+              </div>
+              <div class="toolbar__slot">
+                <button class="tool" id="new-sheet"><span class="material-symbols-outlined" aria-hidden="true">draft</span><span>New Sheet</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<div class="ghost" id="ghost" aria-hidden="true"><img alt=""></div>
+
+<footer id="site-footer"></footer>
+<script src="js/layout.js" data-root="./" data-page="about"></script>
+<script src="js/about.js"></script>
+</body>
+</html>
